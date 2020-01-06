@@ -18,9 +18,7 @@ public class WordCountCollector implements Collector<String, HashMap<String, Int
 
     @Override
     public BiConsumer<HashMap<String, Integer>, String> accumulator() {
-        return (map, string) -> {
-            map.merge(string, 1, Integer::sum);
-        };
+        return (map, string) -> map.merge(string, 1, Integer::sum);
     }
 
     @Override
@@ -33,11 +31,15 @@ public class WordCountCollector implements Collector<String, HashMap<String, Int
 
     @Override
     public Function<HashMap<String, Integer>, Map<String, Integer>> finisher() {
-        return m -> m;
+        return identity();
     }
 
     @Override
     public Set<Characteristics> characteristics() {
         return Collections.unmodifiableSet(EnumSet.of(Characteristics.IDENTITY_FINISH, Characteristics.UNORDERED));
+    }
+
+    static <T extends R, R> Function<T, R> identity() {
+        return t -> t;
     }
 }
