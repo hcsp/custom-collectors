@@ -16,7 +16,7 @@ public class WordCountCollector implements Collector<String, Map<String, Integer
 
     @Override
     public BiConsumer<Map<String, Integer>, String> accumulator() {
-        return (map, v) -> map.put(v, map.getOrDefault(v, 0) + 1);
+        return (map, k) -> map.put(k, map.getOrDefault(k, 0) + 1);
     }
 
     @Override
